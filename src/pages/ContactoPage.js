@@ -1,6 +1,11 @@
 import React from "react";
 import '../styles/components/pages/ContactoPage.css';
 
+import ButtonSendContacto from "./ButtonSendContacto";
+const alertMensajeEnviado = () => {
+    alert("el mensaje fue enviado.")
+}
+
  const Contacto = (props) => {
     return(
         <main className="holder">
@@ -23,9 +28,7 @@ import '../styles/components/pages/ContactoPage.css';
                         <label for="mensaje">Mensaje</label>
                         <textarea name=""></textarea>
                     </p>
-                    <p className="acciones">
-                        <input type="submit" value="enviar"/>
-                    </p>
+                    <ButtonSendContacto eventClick={alertMensajeEnviado}/>
                 </form>
             </div>
             <div className="datos">
