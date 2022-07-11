@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import '../styles/components/pages/NosotrosPage.css';
+import { Grid } from "@mui/material";
 
 import Staff from "./Staff";
 
@@ -32,7 +33,7 @@ import Staff from "./Staff";
             </div>
             <div className="staff">
             <h2>STAFF</h2>
-            {empleados.map((item) => <Staff {...item}/>)}
+            <Grid container spacing={1}>{empleados.map((item) => <Staff {...item}/>)}</Grid>
             </div>
             
         </main>

@@ -1,4 +1,6 @@
 import React from "react";
+import { Button } from "@mui/material";
+import SendIcon from '@mui/icons-material/Send';
 
 const ButtonSendContacto = (props) => {
 
@@ -8,9 +10,9 @@ const ButtonSendContacto = (props) => {
         }
     }
     return ( 
-        <p className="acciones">
-            <input type="submit" value="enviar" onClick={handleClick}/>
-        </p>
+        <Button variant="contained" color="success" endIcon={<SendIcon/>} onClick={handleClick}>
+            Enviar
+        </Button>
      );
 }
  
