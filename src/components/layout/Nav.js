@@ -1,19 +1,22 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
-import '../../styles/components/Layout/Nav.css';
 
-
-  let activeClassName = "underline";
+const navItems = [
+    {name : "Home", href: "/"},
+    {name : "Nosotros", href: "/nosotros"},
+    {name : "Noticias", href: "/noticias"},
+    {name : "Contacto", href: "/contacto"}
+]
 
 const Nav = (props) => {
     return(
-        <nav>
-            <div>
-                <ul>
-                    <li><NavLink to="/" className={({ isActive }) => isActive ? "activo" : activeClassName}>Home</NavLink></li>
-                    <li><NavLink to="/nosotros" className={({ isActive }) => isActive ? "activo" : activeClassName}>Nosotros</NavLink></li>
-                    <li><NavLink to="/noticias" className={({ isActive }) => isActive ? "activo" : activeClassName}>Noticias</NavLink></li>
-                    <li><NavLink to="/contacto" className={({ isActive }) => isActive ? "activo" : activeClassName}>Contacto</NavLink></li>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow p-3 mb-5 ">
+            <div className="container d-flex justify-content-center">
+                <ul className="navbar-nav mb-2">
+                    {navItems.map((item) => (
+                            <li className="nav-item mx-4"><NavLink className="nav-link" to={item.href}>{item.name}</NavLink></li>
+                    )
+                    )}
                 </ul>
             </div>
         </nav>

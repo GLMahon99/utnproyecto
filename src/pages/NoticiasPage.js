@@ -4,6 +4,7 @@ import NoticiaItem from "../components/layout/noticias/NoticiaItem";
 import { useState, useEffect } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import '../styles/components/pages/NoticiasPage.css';
 
  const Noticias = (props) => {
     const [loading, setLoading] = useState(false);

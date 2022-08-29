@@ -1,82 +1,140 @@
-import React, {useState} from "react";
-import '../styles/components/pages/ContactoPage.css';
-import {Alert , AlertTitle , Grid, TextField} from '@mui/material';
+import React, { useState } from "react";
+import "../styles/components/pages/ContactoPage.css";
+import axios from "axios";
 
-import ButtonSendContacto from "./ButtonSendContacto";
+const Contacto = (props) => {
 
- const Contacto = (props) => {
-  const [show, setShow] = useState(true);
+  const initialForm = {
+    nombre: '',
+    apellido: '',
+    telefono:'',
+    email: '',
+    mensaje:''
+  }
 
-    return(
-        <main className="holder">
-            <div>
-                <h2>CONTACTO</h2>
-                
-                
-                   {show ? (
-                    <div>
-                   <Grid container spacing={3}/>
-                   <Grid item xs={4}>
-                     <TextField
-                       required
-                       id="firstName"
-                       name="firstName"
-                       label="Nombre"
-                       fullWidth
-                       autoComplete="given-name"
-                       variant="standard"
-                     />
-                     <TextField
-                       required
-                       id="lastName"
-                       name="lastName"
-                       label="apellido"
-                       fullWidth
-                       autoComplete="family-name"
-                       variant="standard"
-                     />
-                     <TextField
-                       required
-                       id="address1"
-                       name="address1"
-                       label="telefono"
-                       fullWidth
-                       autoComplete="shipping address-line1"
-                       variant="standard"
-                     />
-                     <TextField
-                       required
-                       id="address2"
-                       name="address2"
-                       label="email"
-                       fullWidth
-                       autoComplete="shipping address-line2"
-                       variant="standard"
-                     />
-                   </Grid>
-                    <Grid item xs={8}>
-                      <TextField fullWidth label="Mensaje" id="fullWidth" multiline rows={5} maxRows={10} />
-                    </Grid>
-                   <ButtonSendContacto eventClick={() => {setShow(!show)}}/>
-                   </div>)
-                   :
-                   (<Alert severity="success">
-                    <AlertTitle>Mensaje enviado correctamente</AlertTitle>
-                     Pronto recibiras nuestra respuesta via email.<strong>Gracias por comunicarte.</strong> 
-                    </Alert>)} 
-                
+  const [sending, setSending] = useState(false);
+  const [msg, setMsg] = useState('');
+  const [formData, setFormData] = useState(initialForm);
+
+  const handleChange = e => {
+    const {name, value} = e.target;
+    setFormData(oldData => ({
+      ...oldData,
+      [name]: value
+    }));
+  }
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setMsg('');
+    setSending(true)
+    const response = await axios.post('http://localhost:3000/api/contacto', formData);
+    setSending(false);
+    setMsg(response.data.message);
+    if (response.data.error === false) {
+      setFormData(initialForm)
+    }
+  }
+
+  return (
+    <main className="holder ">
+      <div className="row container row-cols-2">
+        <div className="col">
+          <h3>Contacto</h3>
+          <form className="form-control mb-4" action="/contacto" method="post" onSubmit={handleSubmit}>
+            <div className="row row-cols-2">
+              <div className="col">
+                <div class="form-floating mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder="Nombre"
+                    name="nombre"
+                    value={formData.nombre}
+                    onChange={handleChange}
+                  />
+                  <label for="floatingInput">Nombre</label>
+                </div>
+              </div>
+              <div className="col">
+                <div class="form-floating mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder="Apellido"
+                    name="apellido"
+                    value={formData.apellido}
+                    onChange={handleChange}
+                  />
+                  <label for="floatingInput">Apellido</label>
+                </div>
+              </div>
             </div>
-            <div className="datos">
-                <h2>Otras vías de contacto</h2>
-                <p>También puede comunicarse por:</p>
-                <ul>
-                    <li>Telefono: 4565231</li>
-                    <li>Email: lalalal@gmail.com</li>
-                    <li>Facebook:</li>
-                    <li>Twiter:</li>
-                </ul>
+
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="floatingInput"
+                placeholder="name@example.com"
+                name="telefono"
+                value={formData.telefono}
+                onChange={handleChange}
+              />
+              <label for="floatingInput">Teléfono</label>
             </div>
-        </main>
-    )
- };
- export default Contacto;
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                className="form-control"
+                id="floatingInput"
+                placeholder="name@example.com"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+              <label for="floatingInput">Email</label>
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="mensaje" value={formData.mensaje}
+                    onChange={handleChange} placeholder="Escriba su consulta aquí"></textarea>
+            </div>
+            <div className="row row-cols-3">
+              <div className="col">
+              <input type="submit" className="btn btn-primary col"
+                value="Enviar"
+              />
+              </div>
+              
+            </div>
+          </form>
+          {sending ? <div class="d-flex align-items-center">
+                        <strong>Loading...</strong>
+                        <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+                      </div> : null}
+      {msg ? <div class="alert alert-success" role="alert">
+      <i class="bi bi-check2-all">{msg}</i>
+                
+            </div> : null}
+        </div>
+
+        <div className="col">
+          <h3>Otras vías de contacto</h3>
+          <p>
+            Tambien puede contactarse con nosotros usando los siguientes medios
+          </p>
+          <ul>
+            <li>Teléfono: 45665215</li>
+            <li>Email: contacto@gmail.com</li>
+            <li>Facebook:</li>
+            <li>Instagram:</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+  );
+};
+export default Contacto;

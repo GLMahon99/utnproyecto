@@ -1,0 +1,11 @@
+.cuerpo {
+    color: black;
+    text-align: justify;
+    
+}
+.cuerpo p {
+    text-indent: 10px;
+    font-size: 1.2em;
+    font-weight: 200;
+    line-height: 1.8;
+}
