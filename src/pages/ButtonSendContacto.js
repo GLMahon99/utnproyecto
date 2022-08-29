@@ -10,7 +10,7 @@ const ButtonSendContacto = (props) => {
         }
     }
     return ( 
-        <Button variant="contained" color="success" endIcon={<SendIcon/>} onClick={handleClick}>
+        <Button variant="contained" color="success" size="small" endIcon={<SendIcon/>} onClick={handleClick}>
             Enviar
         </Button>
      );
