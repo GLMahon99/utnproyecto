@@ -13,7 +13,7 @@ import '../styles/components/pages/NoticiasPage.css';
     useEffect(() => {
         const cargarNoticias = async () => {
             setLoading(true);
-            const response = await axios.get('http://localhost:3000/api/noticias');
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/noticias`);
             setNoticias(response.data);
             setLoading(false);
         };
